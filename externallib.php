@@ -494,10 +494,12 @@ class local_reflect_external extends external_api {
                 $questions[$item_id] = (array) $question;
             }
 
-
+            // capture the element 'page_after_submit' to support custom messages when the
+            // questionary is finished
             $feedback = array(
                 'name' => $feedback_object->name,
                 'id' => $feedback_object->id,
+                'feedbackMessage' => $feedback_object ->page_after_submit,
                 'questions' => $questions
             );
 
@@ -525,7 +527,8 @@ class local_reflect_external extends external_api {
                     array(
                 'name' => new external_value(PARAM_TEXT, 'feedback name'),
                 'id' => new external_value(PARAM_INT, 'event id'),
-                'questions' => new external_multiple_structure(
+                'feedbackMessage' => new external_value(PARAM_RAW,'feedback message'),          //needed to support custom
+                'questions' => new external_multiple_structure(                                 //      feedback messages
                         new external_single_structure(
                         array(
                     'id' => new external_value(PARAM_INT, 'Question Id'),
